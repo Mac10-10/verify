@@ -146,7 +146,7 @@
     .connect-btn {
       background-color: #00aa55;
       border-radius: 25px;
-      border: 4px solid transparent;
+      border: 2px solid transparent;
       color: var(--text);
       font-size: 15px;
       cursor: pointer;
@@ -169,22 +169,7 @@
       transition: background-color 0.3s ease;
       --angle: 0deg;
     }
-
-    .connect-btn:hover {
-      background-color: linear-gradient(#00aa55, #00aa55), /* fill */
-        conic-gradient(
-          from var(--angle),
-          red,
-          orange,
-          yellow,
-          green,
-          blue,
-          skyblue,
-          red
-        ); /* no change on hover */
-      animation: rotate-border 2s linear infinite;
-    }
-
+    
     @keyframes rotate-border {
       to {
         --angle: 360deg;
