@@ -123,7 +123,11 @@
       overflow: hidden;
     }
 
-    /* Existing styles for create-wallet-btn */
+    .action-btn:hover {
+      background: var(--btn-hover-bg);
+    }
+
+    /* Separate styles for each header button */
     .create-wallet-btn {
       background-color: #0055ff;
     }
@@ -132,7 +136,7 @@
       background-color: #003bb5;
     }
 
-    /* Rainbow border animation for Connect button */
+    /* Animate rainbow border on hover */
     @property --angle {
       syntax: '<angle>';
       initial-value: 0deg;
@@ -142,16 +146,16 @@
     .connect-btn {
       background-color: #00aa55;
       border-radius: 25px;
-      border: 2px solid transparent;
+      border: 4px solid transparent;
       color: var(--text);
       font-size: 15px;
       cursor: pointer;
       padding: 0 20px;
-      /* Use gradient with animated start point */
+
       background-image:
-        linear-gradient(#00aa55, #00aa55),
+        linear-gradient(#00aa55, #00aa55), /* fill */
         conic-gradient(
-          from: var(--angle),
+          from var(--angle),
           red,
           orange,
           yellow,
@@ -162,13 +166,19 @@
         );
       background-origin: border-box;
       background-clip: padding-box, border-box;
-      transition: background-image 0.5s linear;
+      transition: background-color 0.3s ease;
       --angle: 0deg;
     }
 
-    /* Animate the rainbow gradient clockwise by 120 degrees on hover */
     .connect-btn:hover {
-      --angle: 120deg;
+      background-color: #00aa55; /* no change on hover */
+      animation: rotate-border 2s linear infinite;
+    }
+
+    @keyframes rotate-border {
+      to {
+        --angle: 360deg;
+      }
     }
 
     main {
@@ -249,7 +259,7 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete styling remains unchanged */
+    /* Autocomplete suggestions container - horizontal layout */
     .autocomplete-items {
       display: flex !important;
       flex-wrap: wrap;
@@ -266,7 +276,7 @@
       position: static;
       max-height: none;
       overflow: visible;
-      font-size: 8px;
+      font-size: 8px; /* smaller font size */
     }
 
     .autocomplete-items div {
