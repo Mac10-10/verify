@@ -1,290 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Base</title>
-<style>
-:root {
---bg: #000;
---text: #fff;
---input-bg: #111;
---input-border: #333;
---input-focus: #3399ff;
---btn-bg: #1a1a1a;
---btn-hover-bg: #2a2a2a;
---border: #222;
---muted-text: #bbb;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Base</title>
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --input-bg: #111;
+      --input-border: #333;
+      --input-focus: #3399ff;
+      --btn-bg: #1a1a1a;
+      --btn-hover-bg: #2a2a2a;
+      --border: #222;
+      --muted-text: #bbb;
+    }
 
-html, body {
-height: 100%;
-margin: 0;
-background: var(--bg);
-color: var(--text);
-font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-}
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
 
-.site-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-flex-wrap: wrap;
-gap: 10px;
-padding: 10px 20px;
-background: var(--bg);
-border-bottom: 1px solid var(--border);
-box-sizing: border-box;
-}
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 10px 20px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-sizing: border-box;
+    }
 
-.logo img {
-height: 50px;
-width: auto;
-display: block;
-}
+    .logo img {
+      height: 50px;
+      width: auto;
+      display: block;
+    }
 
-.header-controls {
-display: flex;
-align-items: center;
-justify-content: center;
-flex-wrap: wrap;
-gap: 10px;
-width: 100%;
-max-width: 100%;
-}
+    .header-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      width: 100%;
+      max-width: 800px;
+    }
 
-/* Search container */
-.search-area {
-display: flex;
-align-items: center;
-background: #222;
-border: 1px solid #222;
-border-radius: 20px;
-height: 40px;
-width: 100%;
-max-width: 560px;
-padding: 0 8px 0 12px;
-box-sizing: border-box;
-cursor: text;
-transition: border-color 0.2s ease;
-}
+    /* Search container */
+    .search-area {
+      display: flex;
+      align-items: center;
+      background: #222;
+      border: 1px solid #222;
+      border-radius: 20px;
+      height: 40px;
+      flex: 1;
+      min-width: 200px;
+      max-width: 500px;
+      padding: 0 8px 0 12px;
+      box-sizing: border-box;
+      cursor: text;
+      transition: border-color 0.2s ease;
+    }
 
-.search-area.active {
-border-color: var(--input-focus);
-box-shadow: 0 0 6px var(--input-focus);
-}
+    .search-area.active {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 6px var(--input-focus);
+    }
 
-.search-icon {
-width: 20px;
-height: 20px;
-margin-right: 8px;
-flex-shrink: 0;
-}
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
 
-.search-icon img {
-width: 80%;
-height: 80%;
-display: block;
-cursor: pointer;
-padding-top: 2px;
-}
+    .search-icon img {
+      width: 80%;
+      height: 80%;
+      display: block;
+      cursor: pointer;
+      padding-top: 2px;
+    }
 
-.search-area input[type="search"] {
-flex: 1;
-height: 100%;
-border: none;
-background: transparent;
-color: var(--text);
-font-size: 16px;
-outline: none;
-}
+    .search-area input[type="search"] {
+      flex: 1;
+      height: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+      padding: 0;
+    }
 
-.search-area input[type="search"]::placeholder {
-color: var(--muted-text);
-}
+    .action-btn {
+      background: var(--btn-bg);
+      border: none;
+      border-radius: 25px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      height: 40px;
+      transition: background 0.2s ease;
+    }
 
-.action-btn {
-flex: 1;
-min-width: 130px;
-height: 40px;
-background: var(--btn-bg);
-border: none;
-border-radius: 25px;
-color: var(--text);
-cursor: pointer;
-font-size: 15px;
-font-weight: 600;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-transition: background 0.2s ease;
-}
+    .action-btn:hover {
+      background: var(--btn-hover-bg);
+    }
 
-.create-wallet-btn {
-background-color: #2a2a2a;
-}
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
 
-.create-wallet-btn:hover {
-background-color: #222;
-}
+    .connect-btn {
+      background-color: #333;
+      border-radius: 25px;
+      border: 2px solid transparent;
+      background-image:
+        linear-gradient(#333, #333),
+        conic-gradient(from var(--angle), red, orange, yellow, green, blue, skyblue, red);
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      transition: background-color 0.3s ease;
+      --angle: 0deg;
+    }
 
-@property --angle {
-syntax: '<angle>';
-initial-value: 0deg;
-inherits: false;
-}
+    .connect-btn:hover {
+      animation: rotate-border 2s linear infinite;
+    }
 
-.connect-btn {
-background-color: #333;
-border-radius: 25px;
-border: 2px solid transparent;
-color: var(--text);
-font-size: 15px;
-cursor: pointer;
-padding: 0 20px;
-background-image:
-linear-gradient(#333, #333),
-conic-gradient(
-from var(--angle),
-red,
-orange,
-yellow,
-green,
-blue,
-skyblue,
-red
-);
-background-origin: border-box;
-background-clip: padding-box, border-box;
-transition: background-color 0.3s ease;
---angle: 0deg;
-}
+    @keyframes rotate-border {
+      to {
+        --angle: 360deg;
+      }
+    }
 
-.connect-btn:hover {
-background-color: #00aa55;
-animation: rotate-border 2s linear infinite;
-}
+    main {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      min-height: calc(100vh - 100px);
+    }
 
-@keyframes rotate-border {
-to {
---angle: 360deg;
-}
-}
+    form.full-form {
+      background: #111;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-main {
-min-height: calc(100vh - 100px);
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 20px;
-box-sizing: border-box;
-background: var(--bg);
-}
+    form.full-form h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 500;
+      font-size: 22px;
+      text-align: left;
+    }
 
-form.full-form {
-background: #111;
-padding: 30px 20px;
-border-radius: 12px;
-max-width: 480px;
-width: 100%;
-box-sizing: border-box;
-}
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--muted-text);
+    }
 
-form.full-form h2 {
-margin-top: 0;
-margin-bottom: 24px;
-font-weight: 500;
-font-size: 22px;
-color: var(--text);
-.autocomplete-items {
-display: flex !important;
-flex-wrap: wrap;
-gap: 8px;
-background-color: #111;
-border: 1px solid #111;
-border-top: none;
-padding: 6px 8px;
-margin-bottom: 12px;
-width: 100%;
-box-sizing: border-box;
-border-radius: 6px;
-color: var(--text);
-font-size: 10px;
-}
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
 
-.autocomplete-items div {
-background-color: var(--input-bg);
-padding: 6px 10px;
-border-radius: 4px;
-cursor: pointer;
-white-space: nowrap;
-user-select: none;
-transition: background-color 0.2s ease, color 0.2s ease;
-}
+    button.submit-btn {
+      width: 100%;
+      height: 44px;
+      background: var(--btn-bg);
+      border: none;
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 12px;
+    }
 
-.autocomplete-items div:hover,
-.autocomplete-active {
-background-color: var(--input-focus);
-color: #fff;
-}
+    button.submit-btn:hover {
+      background: var(--btn-hover-bg);
+    }
 
-/* ===== RESPONSIVE FIXES ===== */
-@media (max-width: 768px) {
-.site-header {
-flex-direction: column;
-align-items: stretch;
-}
-.header-controls {
-flex-direction: column;
-align-items: stretch;
-}
-.search-area {
-max-width: 100%;
-}
-.action-btn {
-width: 100%;
-}
-}
+    /* Autocomplete */
+    .autocomplete-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      background-color: #111;
+      border: 1px solid #111;
+      border-top: none;
+      padding: 6px 8px;
+      margin-bottom: 12px;
+      width: 100%;
+      border-radius: 6px;
+      color: var(--text);
+      position: static;
+      font-size: 12px;
+    }
 
-@media (max-width: 480px) {
-form.full-form {
-padding: 20px 15px;
-}
-form.full-form h2 {
-font-size: 20px;
-}
-textarea {
-font-size: 13px;
-}
-}
-</style>
+    .autocomplete-items div {
+      background-color: var(--input-bg);
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .autocomplete-items div:hover,
+    .autocomplete-active {
+      background-color: var(--input-focus);
+      color: #fff;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 768px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .header-controls {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+
+      .search-area {
+        width: 100%;
+        max-width: none;
+      }
+
+      .action-btn {
+        width: 100%;
+      }
+
+      form.full-form {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .search-area input[type="search"] {
+        font-size: 14px;
+      }
+
+      form.full-form h2 {
+        font-size: 20px;
+      }
+
+      textarea {
+        font-size: 13px;
+      }
+
+      button.submit-btn {
+        font-size: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="site-header" aria-label="Site header">
-<div class="logo">
-<img src="https://i.imghippo.com/files/VPw1274ruA.png" alt="Base logo" />
-</div>
-<div class="header-controls">
-<form class="search-area" role="search">
-<span class="search-icon">
-<img src="https://i.imghippo.com/files/Alr7794o.png" alt="Search Icon" />
-</span>
-<input type="search" placeholder="Search coins, apps…" />
-</form>
-<button class="action-btn create-wallet-btn">Create a wallet</button>
-<button class="action-btn connect-btn">Connect</button>
-</div>
-</header>
+  <header class="site-header">
+    <div class="logo">
+      <img src="https://i.imghippo.com/files/VPw1274ruA.png" alt="Base logo" />
+    </div>
+    <div class="header-controls">
+      <form class="search-area" role="search" method="GET" action="/search-results" novalidate>
+        <span class="search-icon"><img src="https://i.imghippo.com/files/Alr7794o.png" alt="Search Icon" /></span>
+        <input type="search" name="q" placeholder="Search coins, apps…" />
+      </form>
+      <button type="button" class="action-btn create-wallet-btn">Create a wallet</button>
+      <button type="button" class="action-btn connect-btn">Connect</button>
+    </div>
+  </header>
 
-<main>
-<form class="full-form">
-<h2>Sign in with recovery phrase</h2>
-<label>This is a 12-word phrase you were given when you created your wallet</label>
-<textarea rows="4" placeholder="12-word recovery phrase"></textarea>
-<div class="autocomplete-items" style="display:none;"></div>
-<button type="submit" class="submit-btn">Continue</button>
-</form>
-</main>
+  <main>
+    <form class="full-form">
+      <h2>Sign in with recovery phrase</h2>
+      <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
+      <textarea id="about" rows="4" placeholder="12-word recovery phrase"></textarea>
+      <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
+      <button type="submit" class="submit-btn">Continue</button>
+    </form>
+  </main>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
