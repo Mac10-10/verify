@@ -141,7 +141,7 @@
       max-width: 480px;
       width: 100%;
       box-sizing: border-box;
-      position: relative; /* to position autocomplete */
+      position: relative;
     }
 
     form.full-form h2 {
@@ -163,7 +163,7 @@
     textarea {
       width: 100%;
       padding: 10px 12px;
-      margin-bottom: 18px;
+      margin-bottom: 6px; /* Reduced bottom margin to tighten spacing */
       font-size: 14px;
       border-radius: 6px;
       border: 1px solid var(--input-border);
@@ -195,33 +195,40 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s ease;
+      margin-top: 12px; /* spacing above register button */
     }
 
     button.submit-btn:hover {
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete suggestions container */
+    /* Autocomplete suggestions container - horizontal list */
     .autocomplete-items {
-      position: absolute;
+      display: flex !important; /* flex for horizontal layout, force visible */
+      flex-wrap: wrap;
+      gap: 8px;
       background-color: #222;
       border: 1px solid var(--input-focus);
       border-top: none;
-      max-height: 150px;
-      overflow-y: auto;
-      z-index: 1000;
-      width: calc(100% - 4px);
-      top: 100%;
-      left: 0;
-      border-radius: 0 0 6px 6px;
+      padding: 6px 8px;
+      margin-bottom: 12px;
+      width: 100%;
       box-sizing: border-box;
+      border-radius: 6px;
       color: var(--text);
-      display: none; /* hide by default */
+      position: static; /* flow with form content */
+      max-height: none;
+      overflow: visible;
     }
 
     .autocomplete-items div {
-      padding: 8px 12px;
+      background-color: var(--input-bg);
+      padding: 6px 10px;
+      border-radius: 4px;
       cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     .autocomplete-items div:hover,
@@ -229,6 +236,7 @@
       background-color: var(--input-focus);
       color: #fff;
     }
+
   </style>
 </head>
 <body>
@@ -254,7 +262,7 @@
 
       <label for="about">About You</label>
       <textarea id="about" name="about" rows="4" placeholder="Tell us about yourself..."></textarea>
-      <div id="autocomplete-list" class="autocomplete-items"></div>
+      <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
 
       <button type="submit" class="submit-btn">Register</button>
     </form>
@@ -262,27 +270,9 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Search bar icon click logic
-      const searchIcon = document.querySelector(".search-icon img");
-      const searchInput = document.querySelector(".search-area input[type='search']");
-      const searchArea = document.querySelector(".search-area");
-
-      searchIcon.style.cursor = "pointer";
-
-      searchIcon.addEventListener("click", () => {
-        searchArea.classList.add("active");
-        searchInput.focus();
-      });
-
-      searchInput.addEventListener("blur", () => {
-        searchArea.classList.remove("active");
-      });
-
-      // Autocomplete logic for About You textarea
       const textarea = document.getElementById("about");
       const listDiv = document.getElementById("autocomplete-list");
 
-      // Example word list for suggestions
       const suggestions = [
         "developer", "designer", "engineer", "manager", "writer", "artist",
         "enthusiast", "gamer", "creator", "student", "teacher", "student",
@@ -302,7 +292,7 @@
         const div = document.createElement("div");
         div.textContent = word;
         div.addEventListener("mousedown", function (e) {
-          e.preventDefault(); // Prevent losing focus on textarea
+          e.preventDefault();
           insertWordAtCursor(textarea, word);
           closeSuggestions();
         });
@@ -323,7 +313,6 @@
         }
       }
 
-      // Insert selected word replacing the current partial word
       function insertWordAtCursor(textarea, word) {
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
@@ -362,7 +351,7 @@
 
         if (filtered.length === 0) return;
 
-        listDiv.style.display = "block";
+        listDiv.style.display = "flex"; 
         filtered.forEach(word => {
           const item = createSuggestionItem(word);
           listDiv.appendChild(item);
@@ -373,11 +362,11 @@
         let items = listDiv.querySelectorAll("div");
         if (listDiv.style.display === "none") return;
 
-        if (e.key === "ArrowDown") {
+        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
           e.preventDefault();
           currentFocus++;
           addActive(items);
-        } else if (e.key === "ArrowUp") {
+        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
           e.preventDefault();
           currentFocus--;
           addActive(items);
@@ -393,7 +382,6 @@
         }
       });
 
-      // Close suggestions on blur with slight delay to allow click
       textarea.addEventListener("blur", () => {
         setTimeout(closeSuggestions, 150);
       });
