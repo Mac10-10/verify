@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Functional Search Bar with Icon in Header</title>
+  <title>Functional Search Bar with Provided Icon</title>
   <style>
     :root {
       --bg: #000;
@@ -54,36 +54,45 @@
       box-sizing: border-box;
     }
 
-    /* Search form wrapper with relative position */
+    /* Search form container uses flex for icon + input */
     .search-area {
-      position: relative;
       display: flex;
       align-items: center;
-    }
-
-    /* Search icon inside input */
-    .search-area svg {
-      position: absolute;
-      left: 12px;
-      width: 20px;
-      height: 20px;
-      pointer-events: none;
-      fill: var(--icon-color);
-    }
-
-    /* Search input with padding to leave space for icon */
-    .search-area input[type="search"] {
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
       height: 40px;
       width: 260px;
-      padding: 6px 12px 4px 40px;
-      border-radius: 6px;
-      border: 1px solid var(--input-border);
-      background: var(--input-bg);
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-      line-height: 28px;
+      padding: 0 8px 0 12px;
       box-sizing: border-box;
+      color: var(--muted-text);
+      cursor: text;
+    }
+
+    /* Your given search icon styling */
+    .search-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--icon-color);
+      font-family: "Segoe UI Symbol", "Arial Unicode MS", "Segoe UI", sans-serif;
+      font-size: 20px;
+      user-select: none;
+      margin-right: 8px;
+      line-height: 1;
+    }
+
+    /* The input inside search area */
+    .search-area input[type="search"] {
+      flex: 1 1 auto;
+      height: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 14px;
+      outline-offset: 0;
+      outline: none;
+      padding: 0;
     }
 
     .search-area input[type="search"]::placeholder {
@@ -91,8 +100,7 @@
     }
 
     .search-area input[type="search"]:focus {
-      border-color: var(--input-focus);
-      box-shadow: 0 0 6px var(--input-focus);
+      outline: none;
     }
 
     .action-btn {
@@ -208,11 +216,8 @@
       <img src="path/to/logo.png" alt="Site logo" />
     </div>
     <div class="header-controls">
-      <form class="search-area" role="search" aria-label="Site search" method="GET" action="/search-results">
-        <!-- Inline SVG search icon -->
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M21.71 20.29l-3.4-3.39A8.936 8.936 0 0018 10a9 9 0 10-9 9c2.1 0 4.04-.76 5.52-2.03l3.39 3.4a1 1 0 001.4-1.4zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"/>
-        </svg>
+      <form class="search-area" role="search" aria-label="Site search" method="GET" action="/search-results" novalidate>
+        <div class="search-icon" aria-hidden="true" translate="no"></div>
         <input type="search" name="q" placeholder="Search coins, apps…" aria-label="Search coins, apps" />
       </form>
       <button type="button" class="action-btn" aria-label="First action">Action 1</button>
