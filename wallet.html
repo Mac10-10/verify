@@ -123,8 +123,7 @@
       overflow: hidden;
     }
 
-
-    /* Separate styles for each header button */
+    /* Existing styles for create-wallet-btn */
     .create-wallet-btn {
       background-color: #0055ff;
     }
@@ -133,7 +132,7 @@
       background-color: #003bb5;
     }
 
-    /* Animate rainbow border on hover */
+    /* Rainbow border animation for Connect button */
     @property --angle {
       syntax: '<angle>';
       initial-value: 0deg;
@@ -148,11 +147,11 @@
       font-size: 15px;
       cursor: pointer;
       padding: 0 20px;
-
+      /* Use gradient with animated start point */
       background-image:
-        linear-gradient(#00aa55, #00aa55), /* fill */
+        linear-gradient(#00aa55, #00aa55),
         conic-gradient(
-          from var(--angle),
+          from: var(--angle),
           red,
           orange,
           yellow,
@@ -163,14 +162,13 @@
         );
       background-origin: border-box;
       background-clip: padding-box, border-box;
-      transition: background-color 0.3s ease;
+      transition: background-image 0.5s linear;
       --angle: 0deg;
     }
-    
-    @keyframes rotate-border {
-      to {
-        --angle: 360deg;
-      }
+
+    /* Animate the rainbow gradient clockwise by 120 degrees on hover */
+    .connect-btn:hover {
+      --angle: 120deg;
     }
 
     main {
@@ -251,7 +249,7 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete suggestions container - horizontal layout */
+    /* Autocomplete styling remains unchanged */
     .autocomplete-items {
       display: flex !important;
       flex-wrap: wrap;
@@ -268,7 +266,7 @@
       position: static;
       max-height: none;
       overflow: visible;
-      font-size: 8px; /* smaller font size */
+      font-size: 8px;
     }
 
     .autocomplete-items div {
