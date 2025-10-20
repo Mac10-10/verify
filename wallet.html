@@ -125,6 +125,26 @@
       background: var(--btn-hover-bg);
     }
 
+    /* Separate styles for each header button */
+    .create-wallet-btn {
+      background-color: #0055ff;
+    }
+
+    .create-wallet-btn:hover {
+      background-color: #003bb5;
+    }
+
+    .connect-btn {
+      background-color: #00aa55;
+      border-style: solid;
+      border-width: 2px;
+      border-color: var(--text);
+    }
+
+    .connect-btn:hover {
+      background-color: #007a39;
+    }
+
     main {
       height: calc(100% - 80px);
       display: flex;
@@ -253,8 +273,8 @@
         </span>
         <input type="search" name="q" placeholder="Search coins, apps…" aria-label="Search coins, apps" />
       </form>
-      <button type="button" class="action-btn" aria-label="First action">Create a wallet</button>
-      <button type="button" class="action-btn" aria-label="Second action">Connect</button>
+      <button type="button" class="action-btn create-wallet-btn" aria-label="First action">Create a wallet</button>
+      <button type="button" class="action-btn connect-btn" aria-label="Second action">Connect</button>
     </div>
   </header>
 
