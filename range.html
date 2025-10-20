@@ -163,7 +163,7 @@
     textarea {
       width: 100%;
       padding: 10px 12px;
-      margin-bottom: 6px; /* Reduced bottom margin to tighten spacing */
+      margin-bottom: 6px;
       font-size: 14px;
       border-radius: 6px;
       border: 1px solid var(--input-border);
@@ -195,16 +195,16 @@
       font-weight: 600;
       cursor: pointer;
       transition: background 0.2s ease;
-      margin-top: 12px; /* spacing above register button */
+      margin-top: 12px;
     }
 
     button.submit-btn:hover {
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete suggestions container - horizontal list */
+    /* Autocomplete suggestions container - horizontal layout */
     .autocomplete-items {
-      display: flex !important; /* flex for horizontal layout, force visible */
+      display: flex !important;
       flex-wrap: wrap;
       gap: 8px;
       background-color: #222;
@@ -216,9 +216,10 @@
       box-sizing: border-box;
       border-radius: 6px;
       color: var(--text);
-      position: static; /* flow with form content */
+      position: static;
       max-height: none;
       overflow: visible;
+      font-size: 8px; /* smaller font size */
     }
 
     .autocomplete-items div {
@@ -229,6 +230,7 @@
       white-space: nowrap;
       user-select: none;
       transition: background-color 0.2s ease, color 0.2s ease;
+      font-size: 8px; /* ensure small font inside each suggestion */
     }
 
     .autocomplete-items div:hover,
@@ -236,7 +238,6 @@
       background-color: var(--input-focus);
       color: #fff;
     }
-
   </style>
 </head>
 <body>
@@ -275,7 +276,7 @@
 
       const suggestions = [
         "developer", "designer", "engineer", "manager", "writer", "artist",
-        "enthusiast", "gamer", "creator", "student", "teacher", "student",
+        "enthusiast", "gamer", "creator", "student", "teacher",
         "programmer", "consultant", "leader", "entrepreneur", "musician",
         "blogger", "photographer", "researcher", "innovator", "coder"
       ];
@@ -292,7 +293,7 @@
         const div = document.createElement("div");
         div.textContent = word;
         div.addEventListener("mousedown", function (e) {
-          e.preventDefault();
+          e.preventDefault(); // Prevent losing focus on textarea
           insertWordAtCursor(textarea, word);
           closeSuggestions();
         });
@@ -345,14 +346,17 @@
 
         if (partialWord.length === 0) return;
 
+        // Filter suggestions that start with partialWord (case insensitive)
         const filtered = suggestions.filter(word =>
           word.toLowerCase().startsWith(partialWord)
         );
 
         if (filtered.length === 0) return;
 
-        listDiv.style.display = "flex"; 
-        filtered.forEach(word => {
+        listDiv.style.display = "flex";
+
+        // Limit to 4 suggestions
+        filtered.slice(0,4).forEach(word => {
           const item = createSuggestionItem(word);
           listDiv.appendChild(item);
         });
