@@ -111,7 +111,7 @@
       height: 40px;
       background: var(--btn-bg);
       border: none;
-      border-radius: 6px;
+      border-radius: 25px;
       color: var(--text);
       cursor: pointer;
       font-size: 15px;
@@ -119,6 +119,8 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .action-btn:hover {
@@ -134,69 +136,50 @@
       background-color: #003bb5;
     }
 
-    .connect-btn {
-  position: relative;
-  z-index: 0;
-  background-color: #00aa55;
-  color: var(--text);
-  border: 2px solid transparent;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
-  width: 150px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.3s ease;
-  overflow: hidden;
-}
+    /* Animate rainbow border on hover */
+    @property --angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
 
-    .connect-btn::before {
-  content: "";
-  position: absolute;
-  top: -2px; bottom: -2px; left: -2px; right: -2px;
-  border-radius: 8px; /* border-radius + border-width */
-  padding: 2px;
-  background:
-    conic-gradient(
-      from 0deg,
-      red,
-      orange,
-      yellow,
-      green,
-      #3363ff, /* blue starts */
-      #73bbf9, /* sky blue */
-      red
-    );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
-  z-index: -1;
-  transition: none;
-  background-size: 200% 200%; /* can adjust for smooth animation */
-  background-position: 0% 50%;
-}
+    .connect-btn {
+      background-color: #00aa55;
+      border-radius: 25px;
+      border: 4px solid transparent;
+      color: var(--text);
+      font-size: 15px;
+      cursor: pointer;
+      padding: 0 20px;
+
+      background-image:
+        linear-gradient(#00aa55, #00aa55), /* fill */
+        conic-gradient(
+          from var(--angle),
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          skyblue,
+          red
+        );
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      transition: background-color 0.3s ease;
+      --angle: 0deg;
+    }
 
     .connect-btn:hover {
-  background-color: #007a39;
-}
+      background-color: #00aa55; /* no change on hover */
+      animation: rotate-border 2s linear infinite;
+    }
 
-    .connect-btn:hover::before {
-  animation: rotateBackground 3s linear infinite;
-}
-
-    @keyframes rotateBackground {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
-
+    @keyframes rotate-border {
+      to {
+        --angle: 360deg;
+      }
+    }
 
     main {
       height: calc(100% - 80px);
@@ -282,7 +265,7 @@
       flex-wrap: wrap;
       gap: 8px;
       background-color: #111;
-      border: 1px solid #111(--input-focus);
+      border: 1px solid var(--input-focus);
       border-top: none;
       padding: 6px 8px;
       margin-bottom: 12px;
@@ -304,7 +287,7 @@
       white-space: nowrap;
       user-select: none;
       transition: background-color 0.2s ease, color 0.2s ease;
-      font-size: 8px; /* ensure small font inside each suggestion */
+      font-size: 8px;
     }
 
     .autocomplete-items div:hover,
@@ -655,7 +638,7 @@
             e.preventDefault();
             if (items[currentFocus]) {
               items[currentFocus].dispatchEvent(new Event("mousedown"));
-            }
+            } 
           }
         } else if (e.key === "Escape") {
           closeSuggestions();
