@@ -50,16 +50,19 @@
       gap: 12px;
     }
 
+    /* Updated search input alignment */
     .search-area input[type="text"] {
       height: 40px;
       width: 260px;
-      padding: 0 12px;
+      padding: 6px 12px 4px;
       border-radius: 6px;
       border: 1px solid var(--input-border);
       background: var(--input-bg);
       color: var(--text);
       outline: none;
       font-size: 14px;
+      line-height: 28px; /* vertically center the text */
+      box-sizing: border-box;
     }
 
     .search-area input[type="text"]::placeholder {
