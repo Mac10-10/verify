@@ -119,6 +119,8 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .action-btn:hover {
@@ -134,31 +136,47 @@
       background-color: #003bb5;
     }
 
-    /* Connect button with rotating rainbow border on hover */
+    /* Fixed Connect button with persistent rainbow border and rotating on hover */
     .connect-btn {
-      --rotate-angle: 0deg;
       background-color: #00aa55;
-      border: 2px solid transparent;
       border-radius: 25px;
-      background-image:
-        linear-gradient(#00aa55, #00aa55), /* Button background */
-        linear-gradient(
-          var(--rotate-angle),
-          red 0%,
-          orange 14%,
-          yellow 28%,
-          green 42%,
-          blue 72%,
-          skyblue 100%
-        );
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      transition: background-color 0.3s ease, --rotate-angle 0.6s ease;
+      border: 4px solid transparent;
+      color: var(--text);
+      font-size: 15px;
+      cursor: pointer;
+      padding: 0 20px;
+      position: relative;
+      transition: background-color 0.3s ease;
+      z-index: 0;
     }
 
-    .connect-btn:hover {
-      background-color: #00aa55; /* Background stays same */
-      --rotate-angle: 180deg; /* Rotate border gradient 180 degrees */
+    .connect-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 25px;
+      padding: 2px; /* thickness of rainbow border */
+      background: conic-gradient(
+        red,
+        orange,
+        yellow,
+        green,
+        blue,
+        skyblue,
+        red
+      );
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask-composite: exclude;
+      transition: transform 0.6s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .connect-btn:hover::before {
+      transform: rotate(180deg);
     }
 
     main {
@@ -239,13 +257,13 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete suggestions container - horizontal layout */
+    /* Autocomplete suggestions container */
     .autocomplete-items {
       display: flex !important;
       flex-wrap: wrap;
       gap: 8px;
       background-color: #111;
-      border: 1px solid #111(--input-focus);
+      border: 1px solid var(--input-focus);
       border-top: none;
       padding: 6px 8px;
       margin-bottom: 12px;
@@ -267,7 +285,7 @@
       white-space: nowrap;
       user-select: none;
       transition: background-color 0.2s ease, color 0.2s ease;
-      font-size: 8px; /* ensure small font inside each suggestion */
+      font-size: 8px;
     }
 
     .autocomplete-items div:hover,
