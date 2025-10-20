@@ -171,7 +171,17 @@
     }
 
     .connect-btn:hover {
-      background-color: #00aa55; /* no change on hover */
+      background-color: linear-gradient(#00aa55, #00aa55), /* fill */
+        conic-gradient(
+          from var(--angle),
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          skyblue,
+          red
+        ); /* no change on hover */
       animation: rotate-border 2s linear infinite;
     }
 
