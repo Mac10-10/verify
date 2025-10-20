@@ -141,8 +141,8 @@
       max-width: 480px;
       width: 100%;
       box-sizing: border-box;
-      box-shadow: 0 0 12px rgba(51,153,255,0.4);
-      position: relative;
+      position: relative; /* to position autocomplete */
+      /* Removed box-shadow to eliminate line strike */
     }
 
     form.full-form h2 {
@@ -212,11 +212,12 @@
       overflow-y: auto;
       z-index: 1000;
       width: calc(100% - 4px);
-      top: 110px; /* below textarea */
-      left: 20px;
+      top: 100%;
+      left: 0;
       border-radius: 0 0 6px 6px;
       box-sizing: border-box;
       color: var(--text);
+      display: none; /* hide by default */
     }
 
     .autocomplete-items div {
