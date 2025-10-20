@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Search Bar with PNG Icon</title>
+  <title>Search Bar with PNG Icon and Autocomplete</title>
   <style>
     :root {
       --bg: #000;
@@ -51,7 +51,7 @@
       box-sizing: border-box;
     }
 
-    /* Search container with PNG icon */
+    /* Search container */
     .search-area {
       display: flex;
       align-items: center;
@@ -142,6 +142,7 @@
       width: 100%;
       box-sizing: border-box;
       box-shadow: 0 0 12px rgba(51,153,255,0.4);
+      position: relative;
     }
 
     form.full-form h2 {
@@ -200,6 +201,34 @@
     button.submit-btn:hover {
       background: var(--btn-hover-bg);
     }
+
+    /* Autocomplete suggestions container */
+    .autocomplete-items {
+      position: absolute;
+      background-color: #222;
+      border: 1px solid var(--input-focus);
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      z-index: 1000;
+      width: calc(100% - 4px);
+      top: 110px; /* below textarea */
+      left: 20px;
+      border-radius: 0 0 6px 6px;
+      box-sizing: border-box;
+      color: var(--text);
+    }
+
+    .autocomplete-items div {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .autocomplete-items div:hover,
+    .autocomplete-active {
+      background-color: var(--input-focus);
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -220,11 +249,12 @@
   </header>
 
   <main>
-    <form class="full-form" action="#" method="post" aria-label="User details form">
+    <form class="full-form" action="#" method="post" aria-label="User details form" autocomplete="off">
       <h2>Sign Up</h2>
 
       <label for="about">About You</label>
       <textarea id="about" name="about" rows="4" placeholder="Tell us about yourself..."></textarea>
+      <div id="autocomplete-list" class="autocomplete-items"></div>
 
       <button type="submit" class="submit-btn">Register</button>
     </form>
@@ -232,6 +262,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
+      // Search bar icon click logic
       const searchIcon = document.querySelector(".search-icon img");
       const searchInput = document.querySelector(".search-area input[type='search']");
       const searchArea = document.querySelector(".search-area");
@@ -245,6 +276,96 @@
 
       searchInput.addEventListener("blur", () => {
         searchArea.classList.remove("active");
+      });
+
+      // Autocomplete logic for About You textarea
+      const textarea = document.getElementById("about");
+      const listDiv = document.getElementById("autocomplete-list");
+
+      // Example word list for suggestions
+      const suggestions = [
+        "developer", "designer", "engineer", "manager", "writer", "artist",
+        "enthusiast", "gamer", "creator", "student", "teacher", "student",
+        "programmer", "consultant", "leader", "entrepreneur", "musician",
+        "blogger", "photographer", "researcher", "innovator", "coder"
+      ];
+
+      function closeSuggestions() {
+        listDiv.innerHTML = "";
+        listDiv.style.display = "none";
+      }
+
+      function createSuggestionItem(word) {
+        const div = document.createElement("div");
+        div.textContent = word;
+        div.addEventListener("mousedown", function (e) {
+          e.preventDefault(); // Prevent losing focus on textarea
+          insertWordAtCursor(textarea, word);
+          closeSuggestions();
+        });
+        return div;
+      }
+
+      // Insert selected word replacing the current partial word
+      function insertWordAtCursor(textarea, word) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const value = textarea.value;
+
+        // Find the word start by moving backward from cursor to whitespace or line start
+        let wordStart = start;
+        while (wordStart > 0 && !/\s/.test(value[wordStart - 1])) {
+          wordStart--;
+        }
+        // Insert replacement word and keep cursor after inserted word
+        const before = value.substring(0, wordStart);
+        const after = value.substring(end);
+        textarea.value = before + word + after;
+
+        // Move cursor to just after inserted word
+        const newPos = wordStart + word.length;
+        textarea.setSelectionRange(newPos, newPos);
+        textarea.focus();
+      }
+
+      textarea.addEventListener("input", function () {
+        const inputVal = textarea.value;
+        const cursorPos = textarea.selectionStart;
+
+        // Find the current partial word being typed
+        let wordStart = cursorPos;
+        while (wordStart > 0 && !/\s/.test(inputVal[wordStart - 1])) {
+          wordStart--;
+        }
+        const partialWord = inputVal.substring(wordStart, cursorPos).toLowerCase();
+
+        // Clear any existing suggestions
+        closeSuggestions();
+
+        if (partialWord.length === 0) {
+          return;
+        }
+
+        // Filter suggestions based on partial word
+        const filtered = suggestions.filter(word =>
+          word.toLowerCase().startsWith(partialWord)
+        );
+
+        if (filtered.length === 0) {
+          return;
+        }
+
+        // Show suggestions container and add suggestion items
+        listDiv.style.display = "block";
+        filtered.forEach(word => {
+          const item = createSuggestionItem(word);
+          listDiv.appendChild(item);
+        });
+      });
+
+      // Close suggestions on blur but slight delay to allow click
+      textarea.addEventListener("blur", () => {
+        setTimeout(closeSuggestions, 150);
       });
     });
   </script>
