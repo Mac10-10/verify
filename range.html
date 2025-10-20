@@ -142,7 +142,6 @@
       width: 100%;
       box-sizing: border-box;
       position: relative; /* to position autocomplete */
-      /* Removed box-shadow to eliminate line strike */
     }
 
     form.full-form h2 {
@@ -291,9 +290,12 @@
         "blogger", "photographer", "researcher", "innovator", "coder"
       ];
 
+      let currentFocus = -1;
+
       function closeSuggestions() {
         listDiv.innerHTML = "";
         listDiv.style.display = "none";
+        currentFocus = -1;
       }
 
       function createSuggestionItem(word) {
@@ -307,23 +309,34 @@
         return div;
       }
 
+      function addActive(items) {
+        if (!items) return false;
+        removeActive(items);
+        if (currentFocus >= items.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = items.length - 1;
+        items[currentFocus].classList.add("autocomplete-active");
+      }
+
+      function removeActive(items) {
+        for (const item of items) {
+          item.classList.remove("autocomplete-active");
+        }
+      }
+
       // Insert selected word replacing the current partial word
       function insertWordAtCursor(textarea, word) {
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
         const value = textarea.value;
 
-        // Find the word start by moving backward from cursor to whitespace or line start
         let wordStart = start;
         while (wordStart > 0 && !/\s/.test(value[wordStart - 1])) {
           wordStart--;
         }
-        // Insert replacement word and keep cursor after inserted word
         const before = value.substring(0, wordStart);
         const after = value.substring(end);
         textarea.value = before + word + after;
 
-        // Move cursor to just after inserted word
         const newPos = wordStart + word.length;
         textarea.setSelectionRange(newPos, newPos);
         textarea.focus();
@@ -333,30 +346,22 @@
         const inputVal = textarea.value;
         const cursorPos = textarea.selectionStart;
 
-        // Find the current partial word being typed
         let wordStart = cursorPos;
         while (wordStart > 0 && !/\s/.test(inputVal[wordStart - 1])) {
           wordStart--;
         }
         const partialWord = inputVal.substring(wordStart, cursorPos).toLowerCase();
 
-        // Clear any existing suggestions
         closeSuggestions();
 
-        if (partialWord.length === 0) {
-          return;
-        }
+        if (partialWord.length === 0) return;
 
-        // Filter suggestions based on partial word
         const filtered = suggestions.filter(word =>
           word.toLowerCase().startsWith(partialWord)
         );
 
-        if (filtered.length === 0) {
-          return;
-        }
+        if (filtered.length === 0) return;
 
-        // Show suggestions container and add suggestion items
         listDiv.style.display = "block";
         filtered.forEach(word => {
           const item = createSuggestionItem(word);
@@ -364,7 +369,31 @@
         });
       });
 
-      // Close suggestions on blur but slight delay to allow click
+      textarea.addEventListener("keydown", function (e) {
+        let items = listDiv.querySelectorAll("div");
+        if (listDiv.style.display === "none") return;
+
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          currentFocus++;
+          addActive(items);
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          currentFocus--;
+          addActive(items);
+        } else if (e.key === "Enter") {
+          if (currentFocus > -1) {
+            e.preventDefault();
+            if (items[currentFocus]) {
+              items[currentFocus].dispatchEvent(new Event("mousedown"));
+            }
+          }
+        } else if (e.key === "Escape") {
+          closeSuggestions();
+        }
+      });
+
+      // Close suggestions on blur with slight delay to allow click
       textarea.addEventListener("blur", () => {
         setTimeout(closeSuggestions, 150);
       });
