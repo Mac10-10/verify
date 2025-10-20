@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Themed Form with Compact Header</title>
+  <style>
+    :root {
+      --bg: #000;
+      --text: #fff;
+      --input-bg: #111;
+      --input-border: #333;
+      --input-focus: #3399ff;
+      --btn-bg: #1a1a1a;
+      --btn-hover-bg: #2a2a2a;
+      --border: #222;
+      --muted-text: #bbb;
+    }
+
+    /* Reset and base */
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* Header styling */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 56px;
+      padding: 6px 12px;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      box-sizing: border-box;
+    }
+
+    .logo img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .search-area input[type="text"] {
+      height: 40px;
+      width: 260px;
+      padding: 0 12px;
+      border-radius: 6px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-area input[type="text"]::placeholder {
+      color: var(--muted-text);
+    }
+
+    .search-area input[type="text"]:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 6px var(--input-focus);
+    }
+
+    .action-btn {
+      width: 150px;
+      height: 40px;
+      background: var(--btn-bg);
+      border: none;
+      border-radius: 6px;
+      color: var(--text);
+      cursor: pointer;
+      font-size: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .action-btn:hover {
+      background: var(--btn-hover-bg);
+    }
+
+    /* Full page form container */
+    main {
+      height: calc(100% - 56px); /* full remaining height below header */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      background: var(--bg);
+    }
+
+    form.full-form {
+      background: #111;
+      padding: 30px 40px;
+      border-radius: 12px;
+      max-width: 480px;
+      width: 100%;
+      box-sizing: border-box;
+      box-shadow: 0 0 12px rgba(51,153,255,0.4);
+    }
+
+    form.full-form h2 {
+      margin-top: 0;
+      margin-bottom: 24px;
+      font-weight: 600;
+      font-size: 24px;
+      color: var(--text);
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: var(--muted-text);
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text);
+      resize: vertical;
+      outline: none;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder,
+    textarea::placeholder {
+      color: var(--muted-text);
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 6px var(--input-focus);
+    }
+
+    button.submit-btn {
+      width: 100%;
+      height: 44px;
+      background: var(--btn-bg);
+      border: none;
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    button.submit-btn:hover {
+      background: var(--btn-hover-bg);
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Site header">
+    <div class="logo" aria-label="Site logo container">
+      <img src="path/to/logo.png" alt="Site logo" />
+    </div>
+    <div class="header-controls">
+      <form class="search-area" role="search" aria-label="Site search">
+        <input type="text" name="q" placeholder="Search…" aria-label="Search" />
+      </form>
+      <div class="actions" aria-label="Header actions">
+        <button type="button" class="action-btn" aria-label="First action">Action 1</button>
+        <button type="button" class="action-btn" aria-label="Second action">Action 2</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <form class="full-form" action="#" method="post" aria-label="User details form">
+      <h2>Sign Up</h2>
+
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" name="fullname" placeholder="Your full name" required />
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="At least 8 characters" required />
+
+      <label for="about">About You</label>
+      <textarea id="about" name="about" rows="4" placeholder="Tell us about yourself..."></textarea>
+
+      <button type="submit" class="submit-btn">Register</button>
+    </form>
+  </main>
+</body>
+</html>
