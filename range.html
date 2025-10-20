@@ -127,7 +127,6 @@
 
     /* Separate styles for each header button */
     .create-wallet-btn {
-      /* For example, a distinct background color */
       background-color: #0055ff;
     }
 
@@ -136,12 +135,27 @@
     }
 
     .connect-btn {
-      background-color: #00aa55;
-    }
+  background-color: #00aa55;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background-image:
+    linear-gradient(to right, #00aa55, #00aa55), /* Button background */
+    linear-gradient(
+      to right,
+      red 0%,
+      orange 14%,
+      yellow 28%,
+      green 42%,
+      blue 72%, /* ~30% blue+sky blue section */
+      skyblue 100%
+    );
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
 
-    .connect-btn:hover {
-      background-color: #007a39;
-    }
+.connect-btn:hover {
+  background-color: #007a39;
+}
 
     main {
       height: calc(100% - 80px);
@@ -567,6 +581,7 @@
 
         if (partialWord.length === 0) return;
 
+        // Filter suggestions that start with partialWord (case insensitive)
         const filtered = suggestions.filter(word =>
           word.toLowerCase().startsWith(partialWord)
         );
@@ -575,6 +590,7 @@
 
         listDiv.style.display = "flex";
 
+        // Limit to 4 suggestions
         filtered.slice(0, 4).forEach(word => {
           const item = createSuggestionItem(word);
           listDiv.appendChild(item);
