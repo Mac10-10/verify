@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dark Themed Form with Compact Header</title>
+  <title>Dark Themed Form with Centered Header Controls and Search Icon</title>
   <style>
     :root {
       --bg: #000;
@@ -15,6 +15,7 @@
       --btn-hover-bg: #2a2a2a;
       --border: #222;
       --muted-text: #bbb;
+      --icon-color: #888;
     }
 
     /* Reset and base */
@@ -26,42 +27,63 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
-    /* Header styling */
+    /* Header styling, height increased to 80px */
     .site-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 56px;
-      padding: 6px 12px;
+      height: 80px;
+      padding: 0 20px;
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       box-sizing: border-box;
     }
 
     .logo img {
-      height: 32px;
+      height: 40px;
       width: auto;
       display: block;
     }
 
+    /* Right side container containing search and buttons */
     .header-controls {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
+      min-width: 460px;
+      box-sizing: border-box;
     }
 
-    /* Updated search input alignment */
+    /* Search input container with relative position for icon */
+    .search-area {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    /* SVG search icon inside input */
+    .search-area svg {
+      position: absolute;
+      left: 12px;
+      width: 20px;
+      height: 20px;
+      pointer-events: none;
+      fill: var(--icon-color);
+    }
+
+    /* Search input with left padding to prevent overlap with icon */
     .search-area input[type="text"] {
       height: 40px;
       width: 260px;
-      padding: 6px 12px 4px;
+      padding: 6px 12px 4px 40px; /* left padding leaves space for icon */
       border-radius: 6px;
       border: 1px solid var(--input-border);
       background: var(--input-bg);
       color: var(--text);
       outline: none;
       font-size: 14px;
-      line-height: 28px; /* vertically center the text */
+      line-height: 28px;
       box-sizing: border-box;
     }
 
@@ -93,9 +115,9 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Full page form container */
+    /* Main page container with form */
     main {
-      height: calc(100% - 56px); /* full remaining height below header */
+      height: calc(100% - 80px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -188,12 +210,14 @@
     </div>
     <div class="header-controls">
       <form class="search-area" role="search" aria-label="Site search">
+        <!-- Inline SVG search icon -->
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M21.71 20.29l-3.4-3.39A8.936 8.936 0 0018 10a9 9 0 10-9 9c2.1 0 4.04-.76 5.52-2.03l3.39 3.4a1 1 0 001.4-1.4zM4 10a6 6 0 1112 0 6 6 0 01-12 0z"/>
+        </svg>
         <input type="text" name="q" placeholder="Search…" aria-label="Search" />
       </form>
-      <div class="actions" aria-label="Header actions">
-        <button type="button" class="action-btn" aria-label="First action">Action 1</button>
-        <button type="button" class="action-btn" aria-label="Second action">Action 2</button>
-      </div>
+      <button type="button" class="action-btn" aria-label="First action">Action 1</button>
+      <button type="button" class="action-btn" aria-label="Second action">Action 2</button>
     </div>
   </header>
 
