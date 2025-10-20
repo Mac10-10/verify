@@ -25,115 +25,6 @@
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     }
 
-    .site-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 80px;
-      padding: 0 20px;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
-      box-sizing: border-box;
-    }
-
-    .logo img {
-      height: 40px;
-      width: auto;
-      display: block;
-    }
-
-    .header-controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      min-width: 460px;
-      box-sizing: border-box;
-    }
-
-    /* Search container */
-    .search-area {
-      display: flex;
-      align-items: center;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: 20px;
-      height: 40px;
-      width: 360px;
-      padding: 0 8px 0 12px;
-      box-sizing: border-box;
-      cursor: text;
-      transition: border-color 0.2s ease;
-    }
-
-    .search-area.active {
-      border-color: var(--input-focus);
-      box-shadow: 0 0 6px var(--input-focus);
-    }
-
-    .search-icon {
-      width: 20px;
-      height: 20px;
-      margin-right: 8px;
-      flex-shrink: 0;
-    }
-
-    .search-icon img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      cursor: pointer;
-    }
-
-    .search-area input[type="search"] {
-      flex: 1 1 auto;
-      height: 100%;
-      border: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 14px;
-      outline-offset: 0;
-      outline: none;
-      padding: 0;
-    }
-
-    .search-area input[type="search"]::placeholder {
-      color: var(--muted-text);
-    }
-
-    .search-area input[type="search"]:focus {
-      outline: none;
-    }
-
-    .action-btn {
-      width: 150px;
-      height: 40px;
-      background: var(--btn-bg);
-      border: none;
-      border-radius: 6px;
-      color: var(--text);
-      cursor: pointer;
-      font-size: 15px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease;
-    }
-
-    .action-btn:hover {
-      background: var(--btn-hover-bg);
-    }
-
-    main {
-      height: calc(100% - 80px);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
-      background: var(--bg);
-    }
-
     form.full-form {
       background: #111;
       padding: 30px 40px;
@@ -202,68 +93,49 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete suggestions container - horizontal layout */
+    /* Autocomplete suggestions container - horizontally below textarea */
     .autocomplete-items {
-      display: flex !important;
+      display: none;   /* Hide by default */
       flex-wrap: wrap;
       gap: 8px;
-      background-color: #222;
-      border: 1px solid var(--input-focus);
-      border-top: none;
-      padding: 6px 8px;
-      margin-bottom: 12px;
+      background-color: transparent; /* no background */
+      color: var(--text);
       width: 100%;
       box-sizing: border-box;
-      border-radius: 6px;
-      color: var(--text);
+      border-radius: 0;
       position: static;
-      max-height: none;
-      overflow: visible;
-      font-size: 8px; /* smaller font size */
+      font-size: 8px;
+      margin-bottom: 12px;
+      padding: 0;
     }
 
     .autocomplete-items div {
-      background-color: var(--input-bg);
+      background-color: transparent; /* no background */
+      border: none; /* no border */
       padding: 6px 10px;
-      border-radius: 4px;
       cursor: pointer;
       white-space: nowrap;
       user-select: none;
       transition: background-color 0.2s ease, color 0.2s ease;
-      font-size: 8px; /* ensure small font inside each suggestion */
+      font-size: 8px;
     }
 
     .autocomplete-items div:hover,
     .autocomplete-active {
       background-color: var(--input-focus);
       color: #fff;
+      border-radius: 4px;
     }
   </style>
 </head>
 <body>
-  <header class="site-header" aria-label="Site header">
-    <div class="logo" aria-label="Site logo container">
-      <img src="path/to/logo.png" alt="Site logo" />
-    </div>
-    <div class="header-controls">
-      <form class="search-area" role="search" aria-label="Site search" method="GET" action="/search-results" novalidate>
-        <span class="search-icon" aria-hidden="true">
-          <img src="https://i.imghippo.com/files/Alr7794o.png" alt="Search Icon" />
-        </span>
-        <input type="search" name="q" placeholder="Search coins, apps…" aria-label="Search coins, apps" />
-      </form>
-      <button type="button" class="action-btn" aria-label="First action">Action 1</button>
-      <button type="button" class="action-btn" aria-label="Second action">Action 2</button>
-    </div>
-  </header>
-
   <main>
     <form class="full-form" action="#" method="post" aria-label="User details form" autocomplete="off">
       <h2>Sign Up</h2>
 
       <label for="about">About You</label>
       <textarea id="about" name="about" rows="4" placeholder="Tell us about yourself..."></textarea>
-      <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
+      <div id="autocomplete-list" class="autocomplete-items"></div>
 
       <button type="submit" class="submit-btn">Register</button>
     </form>
@@ -293,7 +165,7 @@
         const div = document.createElement("div");
         div.textContent = word;
         div.addEventListener("mousedown", function (e) {
-          e.preventDefault(); // Prevent losing focus on textarea
+          e.preventDefault();
           insertWordAtCursor(textarea, word);
           closeSuggestions();
         });
@@ -340,23 +212,21 @@
         while (wordStart > 0 && !/\s/.test(inputVal[wordStart - 1])) {
           wordStart--;
         }
-        const partialWord = inputVal.substring(wordStart, cursorPos).toLowerCase();
+        const partialWord = inputVal.substring(wordStart, cursorPos).trim().toLowerCase();
 
         closeSuggestions();
 
-        if (partialWord.length === 0) return;
+        if (partialWord.length === 0) return;  // Do not show suggestions if no real input
 
-        // Filter suggestions that start with partialWord (case insensitive)
         const filtered = suggestions.filter(word =>
           word.toLowerCase().startsWith(partialWord)
         );
 
         if (filtered.length === 0) return;
 
-        listDiv.style.display = "flex";
+        listDiv.style.display = "flex"; // Show container
 
-        // Limit to 4 suggestions
-        filtered.slice(0,4).forEach(word => {
+        filtered.slice(0, 4).forEach(word => {
           const item = createSuggestionItem(word);
           listDiv.appendChild(item);
         });
