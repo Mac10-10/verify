@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Functional Search Bar with Provided Icon</title>
+  <title>Search Bar with Font Awesome Icon</title>
+  <!-- Load Font Awesome 6 Free CDN for fa-regular fa-magnifying-glass -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
     :root {
       --bg: #000;
@@ -69,13 +71,12 @@
       cursor: text;
     }
 
-    /* Your given search icon styling */
+    /* Font Awesome search icon styling */
     .search-icon {
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--icon-color);
-      font-family: "Segoe UI Symbol", "Arial Unicode MS", "Segoe UI", sans-serif;
       font-size: 20px;
       user-select: none;
       margin-right: 8px;
@@ -217,7 +218,9 @@
     </div>
     <div class="header-controls">
       <form class="search-area" role="search" aria-label="Site search" method="GET" action="/search-results" novalidate>
-        <div class="search-icon" aria-hidden="true" translate="no"></div>
+        <div class="search-icon" aria-hidden="true">
+          <i class="fa-regular fa-magnifying-glass"></i>
+        </div>
         <input type="search" name="q" placeholder="Search coins, apps…" aria-label="Search coins, apps" />
       </form>
       <button type="button" class="action-btn" aria-label="First action">Action 1</button>
