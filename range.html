@@ -135,26 +135,29 @@
     }
 
     .connect-btn {
+  --rotate-angle: to right;
   background-color: #00aa55;
   border: 2px solid transparent;
   border-radius: 25px;
   background-image:
-    linear-gradient(to right, #00aa55, #00aa55), /* Button background */
+    linear-gradient(#00aa55, #00aa55), /* Button background */
     linear-gradient(
-      to right,
+      var(--rotate-angle),
       red 0%,
       orange 14%,
       yellow 28%,
       green 42%,
-      blue 72%, /* ~30% blue+sky blue section */
+      blue 72%,
       skyblue 100%
     );
   background-origin: border-box;
   background-clip: padding-box, border-box;
+  transition: --rotate-angle 0.4s ease;
 }
 
-.connect-btn:hover {
-  background-color: #007a39;
+    .connect-btn:hover {
+  background-color: #00aa55; /* No change */
+  --rotate-angle: to left; /* Rotate border gradient 180 degrees */
 }
 
     main {
